@@ -9,9 +9,7 @@ class PhotoGallery extends Component{
     addPhoto = () => {
         const { photos } = this.state
         const photo = prompt("추가하려는 사진의 경로를 입력해주세요 !")
-        this.setState((prevState)=>{
-           return {photos: photo}
-        })
+        this.setState({photos: this.state.photos.concat(photo)})
     }
 
     // 구현하기
@@ -22,7 +20,9 @@ class PhotoGallery extends Component{
             <button onClick={this.addPhoto}>사진추가하기</button>
             <h1>포토 갤러리</h1>
             ----------
-            <div><img src={photos}></img></div>
+            <div>
+                {photos.map((photo, id)=> { return <img key = {id} src={photo}></img> })}
+            </div>
             </>
         )
     }
