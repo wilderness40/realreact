@@ -4,8 +4,9 @@ import Card from "./Card";
 
 function Cardlist({products}){ //props
     return (
+        <div className="card-list">
+        {
         products.map(product => 
-            <div className="card-list">
                 <Card
                 key={product.id}
                 brand={product.brand}
@@ -14,8 +15,10 @@ function Cardlist({products}){ //props
                 price={product.price}
                 description={product.description}
                 ></Card>
-            </div>
         )
+        }     
+      </div>
+
         )
 }
 
