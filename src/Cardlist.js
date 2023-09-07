@@ -15,8 +15,7 @@ function Cardlist({products}){ //props
                 price={product.price}
                 description={product.description}
                 ></Card>
-        )
-        }     
+        )}     
       </div>
 
         )

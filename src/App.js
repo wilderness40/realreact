@@ -31,7 +31,6 @@ class App extends Component{
       <Header></Header>
       <main>
         <Cardlist
-        key = {serverData.id}
         products = {serverData}
         ></Cardlist>
         

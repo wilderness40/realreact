@@ -1,10 +1,10 @@
 import React from "react";
 import './Card.css'
 
-function Card({key, brand, image, name, price, description}){
+function Card({ brand, image, name, price, description}){
     return(
      <>   
-         <div className="product" >
+         <div className="product">
              <div className="product-img">
                 <img src={image} alt={name}></img>
               </div>
