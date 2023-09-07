@@ -1,0 +1,379 @@
+// 드랍다운 메뉴만들기
+import './App.css'
+import React, { Component } from "react";
+
+// 서버에서 가져온 메뉴 데이터
+const menus = [
+  { value: "서울", text: 'Seoul'},
+  { value: "대구", text: 'Deagu'},
+  { value: "부산", text: 'Busan'},
+]
+
+class App extends Component{
+  state={ value: '' }
+  handleChange = (e) => {
+    console.log(e.target.value)
+    this.setState({value : e.target.value})
+  }
+  render(){
+    const { value } = this.state
+    return(
+    <div className='App'>
+      <select value={value} onChange={this.handleChange}>
+        {menus.length !== 0 && menus.map((menu, id)=>{
+          return <option key={id} value={menu.value}>{menu.text}</option>
+        })}
+      </select>
+      <p>{value}</p>
+    </div>
+    )
+  }  
+}
+
+
+export default App
+
+// input 입력내용 가져와서 alert창에 보여주기
+import './App.css'
+import React, { Component } from "react";
+import Button from './components/Button';
+
+class App extends Component{
+  state = {
+    id: '',
+    password: ''
+  }
+  // e.target.name === 'id => id 상태를 변경함
+  // e.target.name === 'password' => password 상태를 변경함
+  handleChange = (e) =>{
+    console.log(e.target.name)
+    const { name, value } = e.target
+    this.setState({ [name] : value  }) // 대괄호가 없으면 name이라는 state값을 바꾸는게 되버림
+  }
+  login = (e) => {
+    // e.preventDefalut() // 새로고침 방지, 이거 안하면 state값이 사라짐
+    const { id, password } = this.state
+    alert(`
+    아래 정보로 로그인 하시겠습니까?
+    - ID: ${id} /  PASSWORD : ${password} -
+    `)
+  }
+  render(){
+    const { id, password } = this.state
+    return(
+      <div className='App'>
+        <form>
+          <label>ID 
+            <input type='text' name='id' placeholder='아이디를 입력하세요' onChange={this.handleChange} value={id}></input>
+            </label>
+          <label>PASSWORD 
+            <input type='password' name='password' placeholder='비밀번호를 입력하세요' onChange={this.handleChange} value={password}></input>
+            </label>
+          <div><Button handleClick={this.login}>로그인</Button></div>
+        </form>
+      </div>
+    )
+  }  
+}
+
+
+export default App
+
+
+// 사이드바 만들기
+
+import './App.css'
+import React, { Component } from "react";
+import Sidebar from "./Sidebar";
+import Button from './components/Button';
+const menus = [ // 메뉴데이터
+  {
+    icon: '♜',
+    title: 'HOME'
+  },
+  {
+    icon: '♞',
+    title: 'ABOUT'
+  },
+  {
+    icon: '☻',
+    title: 'SETTING'
+  },
+  {
+    icon: '♜',
+    title: 'HOME'
+  },
+  {
+    icon: '♞',
+    title: 'ABOUT'
+  },
+  {
+    icon: '☻',
+    title: 'SETTING'
+  }
+]
+
+class App extends Component{
+  state = {
+    toggle: false
+  }
+  toggleMenu = () =>{
+    this.setState({toggle : !this.state.toggle})
+  }
+  render(){
+    const { toggle } = this.state
+
+    return(
+      <div className='App'>
+        <Button handleClick={this.toggleMenu}>사이드바 열기/닫기</Button>
+        <Sidebar open={toggle}>
+          {menus.map((menu, id)=>{
+            return<div className='menu' key={id}>{menu.icon} {menu.title}</div>
+          })}
+        </Sidebar>
+      </div>      
+    )
+  }
+  
+  }
+
+
+export default App
+
+
+
+// 동물 이미지 뷰어 만들기
+
+import './App.css'
+import React, { Component } from "react";
+import images from "./imageData";
+import Button from "./components/Button";
+
+
+class App extends Component{
+  state={
+    index : 0
+  }
+
+  decreaseIndex = () =>{
+    const nextIndex = this.state.index - 1
+    this.setState({ index: (nextIndex < 0) ? images.length -1 : nextIndex})
+  }
+
+  increaseIndex = () =>{
+    const nextIndex = this.state.index + 1
+    this.setState({ index: (nextIndex > images.length -1) ? 0 : nextIndex})
+  }
+
+  render(){
+  const { index } = this.state
+  const { increaseIndex, decreaseIndex } = this
+  const path = images[index].src
+  const title = images[index].title
+
+    return(
+      <div className="App">
+        <div className="img-container">
+          <img src={path} alt={title} />
+        </div>
+      
+      <div className="control-btns">
+        <Button handleClick={decreaseIndex}>이전</Button>
+        <Button handleClick={increaseIndex}>다음</Button>
+      </div>
+      </div>
+
+    )
+  }
+}
+
+export default App
+
+------------------
+// 영단어 삭제하기
+
+import './App.css'
+import React, { Component } from "react";
+import Words  from "./components/dummyData";
+import Word from "./Word";
+
+class App extends Component{
+  state={
+    words : Words
+  }
+
+
+  handleRemove = ( id, e ) => {
+    const word = e.target.previousSibling.innerText
+    console.log(e.target, word)
+    console.log(id)
+    alert(`해당 단어를 삭제하시겠습니까 - ${word}?`)
+
+    const words = this.state.words.filter((w, index) => index !=id) // 클릭한것을 제외한 배열을 화면에 보여줘야 하니까 클릭한 단어를 제외해야한다
+    this.setState({words}) // words:words
+  }
+
+
+  render(){
+    const { words } = this.state
+  
+    return(
+      <div>
+        <h1 style={{ textAlign: 'center' }}>영단어장</h1>
+        {words.map((w, id)=> {
+          return(
+              <Word w={w}  handleRemove={(e) => this.handleRemove(id, e)}></Word>
+          )
+        })}
+      </div>
+    )
+  }
+}
+
+export default App
+
+
+
+
+-----------------
+
+
+
+// import React, { Component } from "react";
+// import './App.css'
+// import Header from "./Header";
+// import Cardlist from './Cardlist' 
+
+// class App extends Component{
+//   state = {
+//     serverData : []
+//   }
+
+//   componentDidMount(){
+//     const API_URL = 'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline'
+//     fetch(API_URL)
+//     .then(res => res.json())
+//     .then(data => {
+//        // setstate를 사용해야하는데.. state 값을 바꾸면 안되는데
+//     // 새로운 배열에 안넣고 그냥 data를 사용할순 없나
+//       this.setState({ serverData: data })
+//       // this.setState({ serverData: this.state.serverData.concat(data) })
+//     })
+    
+   
+//   }
+
+//   render(){
+//     const { serverData } = this.state
+//     console.log(serverData)
+
+//     return(
+//       <>
+//       <Header></Header>
+//       <main>
+//         <Cardlist
+//         products = {serverData}
+//         ></Cardlist>
+        
+//       </main>
+//       </>
+//     )
+//   }
+// }
+
+// export default App
+
+// import React, { Component } from "react";
+// import './App.css'
+
+
+// class App extends Component{
+
+//   state = {
+//     toggle:true
+//   }
+
+
+//   toggleScreenMode = () => {
+//     this.setState({ toggle: !this.state.toggle })
+//   }
+
+//   render(){
+//     const { toggle } = this.state
+//     return(
+//       <div className={ `normal ${toggle ? '' : 'dark'}`}>
+//         <h1>Change Screen Mode</h1>
+//         <button type='button' onClick={this.toggleScreenMode}>{toggle ? 'DARK' : 'NORMAL'}</button>
+//       </div>
+//   )
+// }
+// }
+
+// export default App
+
+
+
+// import './App.css'
+// import Modal from './Modal'
+// import Button from './Button'
+// import { Component } from 'react'
+
+// class App extends Component {
+//   state={
+//     open: false
+//   }
+  
+//   openModal = () => {
+//     this.setState({ open: true })
+//   }
+//   closeModal = () => {
+//     this.clearInputs()
+//     this.setState({ open: false })
+//   }
+//   // 입력창 초기화
+//   clearInputs = () => {
+//     const inputs = document.querySelectorAll('.Modal-body input')
+//     for(let input of inputs){
+//       input.value = ''
+//     }
+//   }
+
+//   componentDidUpdate(){
+//     if(this.state.open){ // 모달창이 열려있으면
+//       const firstInput = document.querySelectorAll('.Modal-body input')[0]
+//       firstInput.focus() // 첫번째 입력창에 focus를 준다
+//     }
+//   }
+
+//   handleKeyUp = (e) => {
+//     console.log(e.key)
+//     if(e.key == 'Enter'){
+//       this.closeModal()
+//     }
+//   }  
+
+//  // css 모듈 : 겹치는 클래스명이더라도 서로 다른 해쉬값(영문자/숫자)를 생성하기 때문에 겹칠 일이 없음
+//   render(){
+//     const { open } = this.state
+   
+//     // Modal-header css 스타일링은 app.css / modal.css 둘다에 작성해도 적용됨, 하나로 합쳐지기 때문에
+//   return(
+//    <div className='App'>
+//       <Button size='medium' handleClick={this.openModal}>할일 추가하기</Button>
+//       <Modal open={open}>
+//         <div className='Modal-header'>할일을 추가하시겠습니까?</div> 
+//         <div className='Modal-body'>
+//           <label>할일제목: <input type='text'/></label><br/>
+//           <label>할일 상세설명: <input type='text' onKeyUp={this.handleKeyUp}/></label>
+//         </div>
+//         <div className='Modal-footer'>
+//           <Button size='small'>추가</Button>
+//           <Button size='small' handleClick={this.closeModal}>닫기</Button>
+//         </div>
+//       </Modal>
+//    </div>
+//   )
+// }
+// }
+
+// export default App
