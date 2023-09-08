@@ -7,23 +7,19 @@ class App extends Component{
   state = {
     serverData : [],
     flag : true,
-    keyWord :''
+    filteredData: [],
+    enterSignal : true 
   }
-
-  componentDidMount(){
-    const API_URL = 'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline'
-    fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
-       // setstate를 사용해야하는데.. state 값을 바꾸면 안되는데
-    // 새로운 배열에 안넣고 그냥 data를 사용할순 없나
-      this.setState({ serverData: data })
-      // this.setState({ serverData: this.state.serverData.concat(data) })
-    })
-    
-  }
-
-
+// 검색하기  
+  searchItem = (keyWord) => { // 검색어를 내려줘야한다
+    // e.preventDefault()
+    const { serverData, filteredData } = this.state
+    this.setState( prevState => ({
+      filteredData : serverData.filter(data =>  [data.brand, data.price, data.name, data.description].some(item =>
+      item.toLowerCase().includes(keyWord)))}))
+    console.log(filteredData)
+}
+// 가격별 오름차순, 내림차순 정렬하기
   sortItem = () => {
     this.setState(prevState => ({
       flag: !prevState.flag,
@@ -33,34 +29,32 @@ class App extends Component{
     }));
   }
 
-  searchItem = (e) => { // 검색어를 내려줘야한다
-    // e.preventDefault()
-    const { keyWord } = this.state
-    console.log(e.keyCode, e.target.value.trim().toLowerCase())
-      console.log(e.keyCode)
-    this.setState(prevState => ({ 
-      keyWord : e.target.value.trim().toLowerCase(),
-      serverData : prevState.serverData.map(data => [data.brand, data.price, data.name, data.description].includes(keyWord)
-    )}) 
-    )
+  componentDidMount(){
+    const API_URL = 'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline'
+    fetch(API_URL)
+    .then(res => res.json())
+    .then(data => { this.setState({ serverData: data })})
+    console.log(this.state.searchResult)
+  }
   
-}
 
   render(){
-    const { serverData, keyWord } = this.state
+    const { serverData, filteredData, enterSignal } = this.state
     // console.log(this.state.serverData, this.state.flag) // 디버깅용
-    console.log(keyWord)
     return(
       <>
       <Header
       handleClick={this.sortItem}
-      inputEnter={(e) => this.searchItem(e)} 
-      searchWord={keyWord}
+      serverData={serverData}
+      searchClick={this.searchItem}
+      enterSignal = {enterSignal}
       ></Header>
       <main>
         <Cardlist
         key = {serverData.id}
         products = {serverData}
+        filterProducts = {filteredData}
+        enterSignal = {enterSignal}
         ></Cardlist>
         
       </main>

@@ -2,11 +2,11 @@ import React from "react";
 import './Search.css'
 
 function Search({inputEnter,searchWord}){
-    console.log(searchWord)
+    // console.log(searchWord)
     return(
-        <form>
+       <form action="#">  
             <label> 
-                <input type='search' placeholder="검색어를 입력하세요" onChange={inputEnter} defaultValue={searchWord}></input>
+                <input type='search' placeholder="검색어를 입력하세요" onKeyUp={inputEnter} defaultValue={searchWord}></input>
             </label>
         </form>
     )

@@ -1,3 +1,334 @@
+// 라디오 버튼 동적으로
+
+import React, { Component } from "react";
+import './App.css'
+
+// 서버에서 메뉴 데이터
+const foods = ['짜장면', '짬뽕', '탕수육', '잡탕밥', '칠리새우']
+
+class App extends Component{
+  state = {
+    selectedValue: '짜장면'
+  }
+  selectItem = (e) => {
+    console.log(e.target.value)
+    console.log(e.target.checked)
+  
+    this.setState({ selectedValue: e.target.value })
+  }
+  render(){
+    const { selectedValue } = this.state
+    return(
+      <div className="App">
+        {foods.length !==0 && foods.map((food,id)=> <div key={id}>
+
+        <input type='radio' onChange={this.selectItem} value={food} checked={selectedValue === food} /><span style={{background: `${selectedValue === food ? 'yellow':''}`}}>{food}</span>
+
+        </div>)}
+        
+  
+        <h2>사용자가 선택한 음식</h2>
+        <h3>{selectedValue}</h3>
+      </div>
+    )
+  }
+}
+
+export default App
+
+
+//라디오 버튼
+import React, { Component } from "react";
+import './App.css'
+
+// 서버에서 메뉴 데이터
+// const foods = ['짜장면', '짬뽕', '탕수육']
+
+class App extends Component{
+  state = {
+    selectedValue: '짜장면'
+  }
+  selectItem = (e) => {
+    console.log(e.target.value)
+    console.log(e.target.checked)
+  
+    this.setState({ selectedValue: e.target.value })
+  }
+  render(){
+    const { selectedValue } = this.state
+    return(
+      <div className="App">
+        <input type='radio' onChange={this.selectItem} value='짜장면' checked={selectedValue === '짜장면'} /><span style={{background: `${selectedValue === '짜장면' ? 'yellow':''}`}}>짜장면</span>
+        <input type='radio' onChange={this.selectItem} value='짬뽕' checked={selectedValue === '짬뽕'} /><span style={{background: `${selectedValue === '짬뽕' ? 'yellow':''}`}}>짬뽕</span>
+        <input type='radio' onChange={this.selectItem} value='탕수육' checked={selectedValue === '탕수육'} /><span style={{background: `${selectedValue === '탕수육' ? 'yellow':''}`}}>탕수육</span>
+
+        <h2>사용자가 선택한 음식</h2>
+        <h3>{selectedValue}</h3>
+      </div>
+    )
+  }
+}
+
+export default App
+
+
+//체크박스 동적으로 하기 - 안됨 
+
+import React, { Component } from "react";
+import './App.css'
+
+// 서버에서 메뉴 데이터
+const foods = ['짜장면', '짬뽕', '탕수육']
+
+class App extends Component{
+  state= {
+    selectedItems: []
+  }
+  selectedItem = (e) => {
+    console.log(e.target) // 체크박스
+    console.log(e.target.value, e.target.checked) // 체크박스 속성
+  
+    const { selectedItems } = this.state
+    
+    // setState : state 값이 배열, 객체인 경우
+    // 새로운 배열을 만들어 주는 이유
+    // 리액트 : state가 변경되었음을 인식할 때 배열이나 객체의 메모리 주소값을 확인
+    // 원본 배열을 바꾸면 메모리 주소가 바뀐 것을 인식하지 못할 수 있다, push를 쓰지 않는 이유
+    // filter, map, 스프레드 연산자, 비구조화 할당을 사용해야 한다
+
+    if(!selectedItems.includes(e.target.value)){ // 혹은 if(e.target.checked) 로 조건을 해도 됨
+      this.setState({ selectedItems: [...selectedItems, e.target.value] })
+    }else{ // 사용자가 선택한 음식이 이미 배열에 존재하는 경우
+      this.setState({selectedItems: selectedItems.filter(item => item !== e.target.value)})
+    }
+  }
+  render(){
+   const { selectedItems } = this.state  
+   console.log(foods)
+    return(
+      <div className="App">
+        {foods.length !==0 & foods.map((food,id) => 
+        <div key={id}>
+          <input type='checkbox' onChange={this.selectedItem} value={food}></input>
+          <span className={selectedItems.includes(food) ? 'active' : ''}>{food}</span>
+        </div> )}
+        
+        <h2>사용자가 선택한 음식</h2>
+        <h3>{selectedItems.length !==0 ? 
+        selectedItems.join(' ') 
+        : '먹고 싶은 음식을 선택하세요'}</h3>
+      </div>
+    )
+  }
+  
+}
+
+export default App
+
+
+// 체크박스
+import React, { Component } from "react";
+import './App.css'
+
+
+class App extends Component{
+  state= {
+    selectedItems: []
+  }
+  selectedItem = (e) => {
+    console.log(e.target) // 체크박스
+    console.log(e.target.value, e.target.checked) // 체크박스 속성
+  
+    const { selectedItems } = this.state
+    
+    // setState : state 값이 배열, 객체인 경우
+    // 새로운 배열을 만들어 주는 이유
+    // 리액트 : state가 변경되었음을 인식할 때 배열이나 객체의 메모리 주소값을 확인
+    // 원본 배열을 바꾸면 메모리 주소가 바뀐 것을 인식하지 못할 수 있다, push를 쓰지 않는 이유
+    // filter, map, 스프레드 연산자, 비구조화 할당을 사용해야 한다
+
+    if(!selectedItems.includes(e.target.value)){
+      this.setState({ selectedItems: [...selectedItems, e.target.value] })
+    }else{ // 사용자가 선택한 음식이 이미 배열에 존재하는 경우
+      this.setState({selectedItems: selectedItems.filter(item => item !== e.target.value)})
+    }
+  }
+  render(){
+   const { selectedItems } = this.state  
+    return(
+      <div className="App">
+        <input type='checkbox' onChange={this.selectedItem} value='짜장면'></input><span className={selectedItems.includes('짜장면') ? 'active' : ''}>짜장면</span>
+        <input type='checkbox' onChange={this.selectedItem} value='짬뽕'></input><span className={selectedItems.includes('짬뽕') ? 'active' : ''}>짬뽕</span>
+        <input type='checkbox' onChange={this.selectedItem} value='탕수육'></input><span className={selectedItems.includes('탕수육') ? 'active' : ''}>탕수육</span>
+
+        <h2>사용자가 선택한 음식</h2>
+        <h3>{selectedItems.length !==0 ? 
+        selectedItems.join(' ') 
+        : '먹고 싶은 음식을 선택하세요'}</h3>
+      </div>
+    )
+  }
+  
+}
+
+export default App
+
+
+
+// 검색 정렬
+
+import React, { Component } from "react";
+import './App.css'
+import Header from "./Header";
+import Cardlist from './Cardlist' 
+
+class App extends Component{
+  state = {
+    serverData : [],
+    flag : true,
+  }
+
+  componentDidMount(){
+    const API_URL = 'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline'
+    fetch(API_URL)
+    .then(res => res.json())
+    .then(data => { this.setState({ serverData: data })})
+  }
+
+  sortItem = () => {
+    this.setState(prevState => ({
+      flag: !prevState.flag,
+      serverData: [...prevState.serverData].sort((a, b) =>
+        prevState.flag ? a.price - b.price : b.price - a.price
+      )
+    }));
+  }
+
+  render(){
+    const { serverData } = this.state
+    console.log(serverData)
+    // console.log(this.state.serverData, this.state.flag) // 디버깅용
+    return(
+      <>
+      <Header
+      handleClick={this.sortItem}
+      serverData={serverData}
+      ></Header>
+      <main>
+        <Cardlist
+        key = {serverData.id}
+        products = {serverData}
+        ></Cardlist>
+        
+      </main>
+      </>
+    )
+  }
+}
+
+export default App
+
+// 지도만들기
+import './App.css'
+import React, { Component } from "react";
+
+
+//  서버에서 넘어온 가상의 위치 데이터
+const coordinates = [
+  {
+      "name": "서울 강남",
+      "coordinate": [
+          37.497944, // 위도
+          127.027618 // 경도
+      ]
+  },
+  {
+      "name": "대구 동성로",
+      "coordinate": [
+          35.865467,
+          128.593369
+      ]
+  },
+  {
+      "name": "부산 해운대",
+      "coordinate": [
+          35.1884,
+          129.166957
+      ]
+  },
+]
+
+class App extends Component{
+ state = {
+  selectedValue:'', //사용자가 선택한 메뉴
+  map: null, // map객체
+  marker : null, //marker 객체
+  info:'' // 사용자가 선택한 위치정보
+ }
+
+ decomposeArgs = (args) => {
+  const { name, coordinate } = args
+  const [ lat, lon ] = coordinate
+  return [ lat, lon, name ] // 위치정보 반환(위도,경도,지역명)
+ }
+
+ display = (map, marker, loc) => {
+   const [ lat, lon, name ] = this.decomposeArgs(loc) // 위치정보 파싱 (데이커 가공)
+   this.displayLocation(lat, lon, name, map, marker)
+ }
+ displayLocation= (lat, lon, name, mapObj, marker) => {
+    const map = mapObj.setView([lat, lon], 13)
+
+    //지도 타일맵 스타일 설정
+    window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  // 사용자가 선택한 위치에 마커 표시하기
+  marker.setLatLng([lat, lon]) // 마커 위치가 설정한 위도/경도로 변경됨
+  .bindPopup(name)
+  .openPopup()
+
+  // 사용자가 선택한 위치정보 표시하기
+  this.setState({ 
+    info: `
+      지역 : ${name}
+      위치 : ${lat.toFixed(2)} (위도) / ${lon.toFixed(2)} (경도)`
+  })
+  }
+  selectItem = (e) => {
+    const { map, marker } = this.state
+    const selectedLocation = coordinates[e.target.selectedIndex]// 사용자가 선택한 위치정보 조회
+    console.log(selectedLocation)
+    this.display(map, marker, selectedLocation)
+    this.setState({selectedValue : e.target.value})
+  }
+ componentDidMount(){
+  const map=window.L.map('map')// 지도 객체를 조회하기
+  const marker=window.L.marker([0, 0]).addTo(map) // 마커 객체
+  const firstLocation = coordinates[0] // 초기 위치정보
+  this.display(map, marker, firstLocation)// 지도에 초기 위치정보 보여주기
+  this.setState({map, marker})
+}
+ render(){
+  const { selectedValue, info } = this.state
+  return(
+    <div className='App'>
+      <select value={selectedValue} onChange={this.selectItem}>
+        {coordinates.length !==0 && coordinates.map((coord, id)=> {
+          return <option key={id} value={coord.name}>{coord.name}</option>
+        })}
+      </select>
+      <div id='map'></div>  {/* 지도를 보여주는 컨테이너, api문서에 작성지침이 있음 */}
+      <p>{info}</p>
+    </div>
+  )
+ }
+}
+
+
+export default App
+
 // 드랍다운 메뉴만들기
 import './App.css'
 import React, { Component } from "react";
