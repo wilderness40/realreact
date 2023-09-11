@@ -1,83 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
-
-
 .App{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  font-family: 'Nanum Pen Script', cursive;
-  color: lightblue;
-  width: 60%;
-  margin: 0 auto;
+  width: 300px;
+  clear: both;
+  margin: 200px auto;
 }
-.App-photo-container div{
-  font-size: 5rem;
-  margin-bottom: 30px;
-  text-align: right;
-  margin-left: auto;
-}
-.App-search-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 500px;
-  margin-top: 50px;
-  margin-bottom: 30px;
-}
-.App-search-container input{
-  flex: 1;
-  outline: none;
-  border: 2px solid lightblue;
-  border-radius: 5px;
-  height: 50px;
-  margin-right: 3px;
-  padding-left: 10px;
-  box-sizing: border-box;
-  color: lightblue;
-  font-size: 1.3rem;
-}
-.App-search-container input::placeholder{
-  color: lightblue;
-}
-.App-search-container button{
-  all: unset;
-  background: lightblue;
-  color: white;
-  font-size: 2rem;
+.App label{
+  color:lightgreen;
   font-weight: bold;
-  padding: 5px;
-  width: 80px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
+  margin-left: 5px;
 }
-.App-photo-container{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+
+.App input { 
   width: 100%;
-  height: 700px;
-  overflow: auto;
-}
-.App-photo-item{
-  flex: 1 0 25%;
-  height: 200px;
-}
-.App-photo-container::-webkit-scrollbar {
-  width: 13px;  /* 스크롤바의 너비 */
-}
+  height: 30px;
+  clear: both;
 
-.App-photo-container::-webkit-scrollbar-thumb {
-  height: 30%; /* 스크롤바의 길이 */
-  background: lightblue; /* 스크롤바의 색상 */
-  
-  border-radius: 10px;
+  border: 2px solid lightgreen;
+  border-radius: 15px;
+  outline: none;
+  padding: 10px;
+  color: lightgreen;
+  font-weight: bold;
+  font-size: 1rem;
 }
-
-.App-photo-container::-webkit-scrollbar-track {
-  background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+.App input::placeholder{
+  color: lightgreen;
 }
+.login-btn{
+  width: 320px;
+  display: flex;
+  justify-content: flex-end;
+}
+.App{ width: 30%; margin: 200px auto; } .Upload{ display: none; }

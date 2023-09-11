@@ -1,21 +1,14 @@
-import Button from "./components/Button"
+import './Word.css'
 
-
-function Word({handleRemove, w}){    
-    const wordStyle ={
-        display : 'flex',
-        alignItems : 'center',
-        justifyContent : 'center'
-      }
-
-    return(
-        <div style={wordStyle}>
-            <h2>{w.word}</h2>
-            {/* // 클릭할때마다 실행하려면 this.handleRemove가 아닌 콜백형태로 작성해야 한다 (e) => this.handleRemove */}
-            <Button size='small' type='button' handleClick={handleRemove} >DELETE</Button>  
+function Word({ r_link, r_word, r_hanja, r_des}){
+    return (
+        <div className="item">
+            <div className="word">
+                <a href={r_link}>{r_word} {r_hanja}
+                </a>
+            </div>
+            <p className="description">{r_des}</p>
         </div>
     )
-    
 }
-
-export default Word
+export default Word;
