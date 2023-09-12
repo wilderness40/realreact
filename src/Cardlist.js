@@ -3,12 +3,13 @@ import './Cardlist.css'
 import Card from "./Card";
 
 
-function Cardlist({products, filteredData, enterSignal}){ //props
-    return (
+function Cardlist({products, filterProducts, enterSignal}){ //props
+    const newResults = filterProducts?.length > 0 ? filterProducts : products 
+  return (
         <div className="card-list">
         {
-        enterSignal ?        
-        products.map(product => 
+       
+       newResults?.map(product => 
               <Card
                 key={product.id}
                 brand={product.brand}
@@ -16,16 +17,6 @@ function Cardlist({products, filteredData, enterSignal}){ //props
                 name={product.name}
                 price={product.price}
                 description={product.description}
-              ></Card>
-                )
-        : filteredData?.map(filterData => 
-              <Card
-                key={filterData.id}
-                brand={filterData.brand}
-                image={filterData.image_link}
-                name={filterData.name}
-                price={filterData.price}
-                description={filterData.description}
                 >
               </Card>
         )

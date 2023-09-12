@@ -1,0 +1,28 @@
+ul{
+
+    position: relative;
+    left: -10%;
+    top: 0;
+    width: 200px;
+    height: 500px;
+    
+    /* background-color: beige; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+li{
+    position: absolute;
+    top: 53%;
+    list-style: none;
+    display: none;
+    flex-direction: column  ;
+    justify-content: center;
+}
+li a{
+    display: block;
+    width: 100px;
+    height: 30px;
+}

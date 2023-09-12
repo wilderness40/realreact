@@ -6,7 +6,7 @@ function Search({inputEnter,searchWord}){
     return(
        <form action="#">  
             <label> 
-                <input type='search' placeholder="검색어를 입력하세요" onKeyUp={inputEnter} defaultValue={searchWord}></input>
+                <input type='search' placeholder="검색어를 입력하세요" onKeyUp={(e)=>inputEnter(e)} defaultValue={searchWord}></input>
             </label>
         </form>
     )
